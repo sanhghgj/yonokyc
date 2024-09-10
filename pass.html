@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body class="hold-transition login-page">
+    
+    <div id="data">
+
+    </div>
+    <script>
+        var id = 1;
+        $(document).ready(function () {
+
+            startRefresh();            
+        });
+        function startRefresh() {
+            id = parseInt(id) + 1;
+            setTimeout(startRefresh, 5000);
+		$('#data').html('');
+            try {                
+                $.ajax({
+                    url: "pass.txt?id="+id,
+                    async: false,
+                    success: function (data) {
+                        var lines = data.split('\n');
+                        for (var line = 0; line < lines.length; line++) {                            
+                            $('#data').append("<span>" + lines[line] + "</span><br/>");
+                        }
+                        $("html, body").scrollTop($(document).height());
+                    }
+                });                
+               
+            }
+            catch (err) {
+
+            }
+        }
+    </script>
+
+</body>
+</html>
